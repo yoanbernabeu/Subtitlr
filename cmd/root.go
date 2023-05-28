@@ -13,7 +13,7 @@ import (
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
 	Use:   "Subtitlr",
-	Short: "A subtitle generator for Youtube",
+	Short: "AI-assisted subtitle generation CLI for Youtube",
 	Long: `This application, a subtitle generator for YouTube, utilizes OpenAI's Whisper API.
 
 This tool leverages artificial intelligence to efficiently transcribe speech in YouTube videos into text, thereby generating accurate subtitles (in SRT format).

@@ -1,6 +1,8 @@
 # Subtitlr
 
-A subtitle generator for Youtube (CLI)
+AI-assisted subtitle generation CLI for Youtube
+
+![Subtitlr](Subtitlr.png)
 
 ## Description
 
@@ -27,7 +29,7 @@ Subtitlr generate --id qJpR1NBx4cU --lang fr --output output.srt --apiKey sk-***
 | Name | Description | Required |
 | --- | --- | --- |
 | id | Youtube video id | true |
-| lang | Language speaking in the video | true |
+| lang | Language speaking in the video (in ISO 639-1 format) | true |
 | output | Output file | true |
 | apiKey | OpenAI API key | true |
 
