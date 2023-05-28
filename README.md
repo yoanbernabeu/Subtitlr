@@ -20,6 +20,7 @@ Subtitlr generate --id qJpR1NBx4cU --lang fr --output output.srt --apiKey sk-***
 
 * [OpenAI API key](https://beta.openai.com/)
 * [FFmpeg](https://ffmpeg.org/)
+* Linux (tested on Ubuntu 22.04)
 
 ## Parameters
 
@@ -34,7 +35,7 @@ Subtitlr generate --id qJpR1NBx4cU --lang fr --output output.srt --apiKey sk-***
 
 ### From binary
 
-* Linux/Darwin
+* Linux
 
 ```bash
 # With wget

@@ -11,7 +11,7 @@ echo "Distribution: $distro"
 echo "Architecture: $arch"
 
 # Subtitlr version
-version="v0.1.2"
+version="v0.1.3"
 
 echo "Version: $version"
 echo "------------------------"
