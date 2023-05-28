@@ -11,7 +11,7 @@ echo "Distribution: $distro"
 echo "Architecture: $arch"
 
 # Subtitlr version
-version="v0.1.3"
+version="0.1.0"
 
 echo "Version: $version"
 echo "------------------------"
@@ -23,10 +23,10 @@ case "$distro" in
   "Darwin")
     case "$arch" in
       "x86_64")
-        url="https://github.com/yoanbernabeu/Subtitlr/releases/download/${version}/Subtitlr-${version}-darwin-amd64.tar.gz"
+        url="https://github.com/yoanbernabeu/Subtitlr/releases/download/${version}/Subtitlr_${version}_darwin_amd64.tar.gz"
         ;;
       "arm64")
-        url="https://github.com/yoanbernabeu/Subtitlr/releases/download/${version}/Subtitlr-${version}-darwin-arm64.tar.gz"
+        url="https://github.com/yoanbernabeu/Subtitlr/releases/download/${version}/Subtitlr_${version}_darwin_arm64.tar.gz"
         ;;
       *)
         echo "Unsupported architecture"
@@ -38,14 +38,14 @@ case "$distro" in
   echo "Downloading Subtitlr..."
     case "$arch" in
       "i686")
-        url="https://github.com/yoanbernabeu/Subtitlr/releases/download/${version}/Subtitlr-${version}-linux-386.tar.gz"
+        url="https://github.com/yoanbernabeu/Subtitlr/releases/download/${version}/Subtitlr_${version}_linux_386.tar.gz"
         ;;
       "x86_64")
-        url="https://github.com/yoanbernabeu/Subtitlr/releases/download/${version}/Subtitlr-${version}-linux-amd64.tar.gz"
+        url="https://github.com/yoanbernabeu/Subtitlr/releases/download/${version}/Subtitlr_${version}_linux_amd64.tar.gz"
         echo $url
         ;;
       "arm64")
-        url="https://github.com/yoanbernabeu/Subtitlr/releases/download/${version}/Subtitlr-${version}-linux-arm64.tar.gz"
+        url="https://github.com/yoanbernabeu/Subtitlr/releases/download/${version}/Subtitlr_${version}_linux_arm64.tar.gz"
         ;;
       *)
         echo "Unsupported architecture"
