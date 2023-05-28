@@ -32,3 +32,5 @@ jobs:
         goarch: ${{ matrix.goarch }}
         goversion: "https://dl.google.com/go/go1.18.1.linux-amd64.tar.gz"
         binary_name: "Subtitlr"
+        retry: 10
+        overwrite: true
