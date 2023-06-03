@@ -14,6 +14,7 @@ import (
 	"os"
 	"os/exec"
 
+	"github.com/joho/godotenv"
 	"github.com/kkdai/youtube/v2"
 	"github.com/spf13/cobra"
 )
@@ -37,6 +38,7 @@ var generateCmd = &cobra.Command{
 		fmt.Println("id:", id)
 		fmt.Println("lang:", lang)
 		fmt.Println("output:", output)
+		fmt.Println("apiKey:", apiKey)
 		fmt.Println("---------------------------------------")
 
 		/* Calling the function to generate the subtitles */
@@ -53,12 +55,32 @@ func init() {
 	generateCmd.Flags().String("id", "", "YouTube video ID")
 	generateCmd.Flags().String("lang", "", "Language (in ISO 639-1 format) speaking in the video")
 	generateCmd.Flags().String("output", "", "Output file")
-	generateCmd.Flags().String("apiKey", "", "OpenAI API key")
 
 	generateCmd.MarkFlagRequired("url")
 	generateCmd.MarkFlagRequired("lang")
 	generateCmd.MarkFlagRequired("output")
-	generateCmd.MarkFlagRequired("apiKey")
+
+	manageApiKeyEnv()
+}
+
+func manageApiKeyEnv() {
+	err := godotenv.Load(".env")
+	if err != nil {
+		fmt.Println(".env file not found")
+		generateCmd.Flags().String("apiKey", "", "OpenAI API key")
+		return
+	}
+
+	apiKey := os.Getenv("OPENAI_API_KEY")
+
+	if apiKey == "" {
+		fmt.Println("Error: OPENAI_API_KEY not found in .env file")
+		generateCmd.Flags().String("apiKey", "", "OpenAI API key")
+		generateCmd.MarkFlagRequired("apiKey")
+		return
+	}
+
+	generateCmd.Flags().String("apiKey", apiKey, "OpenAI API key")
 }
 
 func generateSubtitles(id string, lang string, output string, apiKey string) {
