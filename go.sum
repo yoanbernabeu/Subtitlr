@@ -22,6 +22,8 @@ github.com/google/pprof v0.0.0-20230406165453-00490a63f317/go.mod h1:79YE0hCXdHa
 github.com/ianlancetaylor/demangle v0.0.0-20220319035150-800ac71e25c2/go.mod h1:aYm2/VgdVmcIU8iMfdMvDMsRAQjcfZSKFby6HOFvi/w=
 github.com/inconshreveable/mousetrap v1.1.0 h1:wN+x4NVGpMsO7ErUn/mUI3vEoE6Jt13X2s0bqwp9tc8=
 github.com/inconshreveable/mousetrap v1.1.0/go.mod h1:vpF70FUmC8bwa3OWnCshd2FqLfsEA9PFc4w1p2J65bw=
+github.com/joho/godotenv v1.5.1 h1:7eLL/+HRGLY0ldzfGMeQkb7vMd0as4CfYvUVzLqw0N0=
+github.com/joho/godotenv v1.5.1/go.mod h1:f4LDr5Voq0i2e/R5DDNOoa2zzDfwtkZa6DnEwAbqwq4=
 github.com/kkdai/youtube/v2 v2.8.0 h1:9y+xrYAR+ed4wV6cNPq3rMvVlRV8TFco3uuEUdqRzHI=
 github.com/kkdai/youtube/v2 v2.8.0/go.mod h1:FMx1e/QBA+GBoRpwLAYJoJZcPE+P0yeA2ckAbPCHZow=
 github.com/kr/pretty v0.1.0/go.mod h1:dAy3ld7l9f0ibDNOQOHHMYYIIbhfbHSm3C4ZsoJORNo=

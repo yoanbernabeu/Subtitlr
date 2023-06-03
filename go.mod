@@ -9,6 +9,7 @@ require (
 	github.com/go-sourcemap/sourcemap v2.1.3+incompatible // indirect
 	github.com/google/pprof v0.0.0-20230406165453-00490a63f317 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
+	github.com/joho/godotenv v1.5.1 // indirect
 	github.com/kkdai/youtube/v2 v2.8.0 // indirect
 	github.com/spf13/cobra v1.7.0 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
