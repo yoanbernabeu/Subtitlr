@@ -13,6 +13,7 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+	"strings"
 
 	"github.com/joho/godotenv"
 	"github.com/kkdai/youtube/v2"
@@ -28,6 +29,7 @@ var generateCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		/* Variables declaration */
 		id, _ := cmd.Flags().GetString("id")
+		file, _ := cmd.Flags().GetString("file")
 		lang, _ := cmd.Flags().GetString("lang")
 		output, _ := cmd.Flags().GetString("output")
 		apiKey, _ := cmd.Flags().GetString("apiKey")
@@ -36,13 +38,27 @@ var generateCmd = &cobra.Command{
 		fmt.Println("---------------------------------------")
 		fmt.Println("You have entered the following values:")
 		fmt.Println("id:", id)
+		fmt.Println("file:", file)
 		fmt.Println("lang:", lang)
 		fmt.Println("output:", output)
 		fmt.Println("apiKey:", apiKey)
 		fmt.Println("---------------------------------------")
 
+		/* Vérification si id et file sont tout les 2 données */
+		if (id == "" && file == "") || (id != "" && file != "") {
+			fmt.Println("Error: Either 'id' or 'file' flag must be provided, but not both.")
+			return
+		}
+		
 		/* Calling the function to generate the subtitles */
-		generateSubtitles(id, lang, output, apiKey)
+		if id != "" {
+			generateSubtitles(id, lang, output, apiKey)
+			return
+		}
+		if file != "" {
+			verification(file, lang, output, apiKey)
+			return
+		}
 
 		/* Displaying the success message */
 		fmt.Println("---------------------------------------")
@@ -52,11 +68,12 @@ var generateCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(generateCmd)
 
-	generateCmd.Flags().String("id", "", "YouTube video ID")
-	generateCmd.Flags().String("lang", "", "Language (in ISO 639-1 format) speaking in the video")
-	generateCmd.Flags().String("output", "", "Output file")
+	generateCmd.Flags().StringP("id", "", "", "YouTube video ID (or file)")
+	generateCmd.Flags().StringP("file", "", "","Audio file MP3 (or id)")
+	generateCmd.Flags().StringP("lang", "l", "fr", "Language (in ISO 639-1 format) speaking in the video")
+	generateCmd.Flags().StringP("output", "o", "output.srt", "Output file")
 
-	generateCmd.MarkFlagRequired("url")
+	//generateCmd.MarkFlagRequired("url")
 	generateCmd.MarkFlagRequired("lang")
 	generateCmd.MarkFlagRequired("output")
 
@@ -245,4 +262,105 @@ func generateSubtitlesFromAudio(lang string, output string, apiKey string) {
 	} else {
 		fmt.Println("Request failed with status:", res.StatusCode)
 	}
+}
+
+func generateSubtitlesFromAudioWithMp3(file string, lang string, output string, apiKey string) {
+	fmt.Println("Generating the subtitles...")
+
+	audioBytes, err := ioutil.ReadFile(file)
+	if err != nil {
+		fmt.Println("Error reading MP3 file:", err)
+		return
+	}
+
+	var b bytes.Buffer
+	w := multipart.NewWriter(&b)
+
+	// Add the audio file to the request
+	fw, err := w.CreateFormFile("file", "temp.mp3")
+	if err != nil {
+		fmt.Println("Error creating form file:", err)
+		return
+	}
+	_, err = fw.Write(audioBytes)
+	if err != nil {
+		fmt.Println("Error writing audio file to form:", err)
+		return
+	}
+
+	// Add the model to the request
+	if err = w.WriteField("model", "whisper-1"); err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	// Add the response format to the request
+	if err = w.WriteField("response_format", "srt"); err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	// Add the language to the request
+	if err = w.WriteField("language", lang); err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	// Close the request
+	if err = w.Close(); err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	// Create the request
+	req, err := http.NewRequest("POST", "https://api.openai.com/v1/audio/transcriptions", &b)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	req.Header.Set("Content-Type", w.FormDataContentType())
+	req.Header.Set("Authorization", "Bearer "+apiKey)
+
+	// Send the request
+	client := &http.Client{}
+	res, err := client.Do(req)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	defer res.Body.Close()
+
+	// Check the response
+	if res.StatusCode == http.StatusOK {
+		bodyBytes, err := ioutil.ReadAll(res.Body)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+
+		// Write the response to the output file
+		err = ioutil.WriteFile(output, bodyBytes, 0644)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+
+		fmt.Println("Subtitles generated successfully!")
+	} else {
+		fmt.Println("Request failed with status:", res.StatusCode)
+	}
+}
+
+func verification(file string, lang string, output string, apiKey string) {
+	/* vérification de l'existence du fichier */
+	if _, err := os.Stat(file); os.IsNotExist(err) {
+		fmt.Println("Error: File not found.")
+		return
+	}
+	/* vérification du fichier audio */
+	if strings.HasSuffix(file, ".mp3") == true {
+		generateSubtitlesFromAudioWithMp3(file, lang, output, apiKey)
+		return
+	}
+
 }
