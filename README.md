@@ -41,7 +41,9 @@ Subtitlr generate --id qJpR1NBx4cU --lang fr --output output.srt
 
 ### Translating subtitles
 
-For translations we offer you the possibility to use the DeepL API with a free account only (500000 per month).
+> For translations we offer you the possibility to use the DeepL API with a free account only (500000 per month).
+>
+> Create an *free* account on [DeepL](https://www.deepl.com/fr/signup?cta=free-login-signup/)
 
 You must have previously generated your subtitle file with the `generate` command.
 
