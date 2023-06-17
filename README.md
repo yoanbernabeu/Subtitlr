@@ -15,7 +15,9 @@ This tool leverages artificial intelligence to efficiently transcribe speech in 
 
 It's designed to improve the accessibility and convenience of video content, ensuring that no matter your language or hearing ability, you can fully engage with and comprehend the material.
 
-## Usage - The simplest way
+## Features
+
+### Generate subtitles - The simplest way
 
 The simplest way to use Subtitlr without configuration is to use the following command:
 
@@ -23,7 +25,7 @@ The simplest way to use Subtitlr without configuration is to use the following c
 Subtitlr generate --id qJpR1NBx4cU --lang fr --output output.srt --apiKey sk-****************************
 ```
 
-## Usage - With configuration
+### Generate subtitles - With configuration
 
 You can also use a `.env` file to store your API key (in `OPENAI_API_KEY` variable) and use the following command:
 
@@ -37,6 +39,18 @@ And after that, you can use the following command without the `--apiKey` paramet
 Subtitlr generate --id qJpR1NBx4cU --lang fr --output output.srt
 ```
 
+### Translating subtitles
+
+For translations we offer you the possibility to use the DeepL API with a free account only (500000 per month).
+
+You must have previously generated your subtitle file with the `generate` command.
+
+You can use the following command to translate subtitles:
+
+```bash
+Subtitlr translate --input input.srt --lang EN --output output_EN.srt --apiKeyDeepl ****************************
+```
+
 ## Requirements
 
 * [OpenAI API key](https://beta.openai.com/)
@@ -46,12 +60,23 @@ Subtitlr generate --id qJpR1NBx4cU --lang fr --output output.srt
 
 ## Parameters
 
+### `generate` command
+
 | Name | Description | Required |
 | --- | --- | --- |
 | id | Youtube video id | true |
 | lang | Language speaking in the video (in ISO 639-1 format) | true |
 | output | Output file | true |
 | apiKey | OpenAI API key | false (if you use the `configure` command) |
+
+### `translate` command
+
+| Name | Description | Required |
+| --- | --- | --- |
+| input | Input file | true |
+| lang | Language to translate (in ISO 639-1 format) | true |
+| output | Output file | true |
+| apiKeyDeepl | DeepL API key | true |
 
 ## Installation
 
